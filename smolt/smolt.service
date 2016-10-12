@@ -1,0 +1,12 @@
+[Unit]
+Description=Smolt webservice container
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker start -a smolt
+ExecStop=/usr/bin/docker stop smolt
+
+[Install]
+WantedBy=local.target
