@@ -1,0 +1,8 @@
+In order to deploy this, you will need to have setup a keycloak
+instance, a realm, and a client configuration for trac.
+
+Then download the keycloak.json from the installation section
+of the client configuration within keycloak, and place it into
+the trac directory. This will then be converted into a config
+for use with mod_auth_openidc
+
