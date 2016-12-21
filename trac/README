@@ -6,3 +6,7 @@ of the client configuration within keycloak, and place it into
 the trac directory. This will then be converted into a config
 for use with mod_auth_openidc
 
+** Trac TicketLockPlugin egg **
+
+This is built as per the instructions in the plugin tarball
+as found in the https://github.com/MythTV/extras repository
