@@ -1,4 +1,4 @@
-FROM fedora:25
+FROM fedora:rawhide
 MAINTAINER Stuart Auchterlonie <stuarta@mythtv.org>
 RUN dnf -y update; dnf -y install httpd mod_wsgi mod_auth_openidc trac trac-authopenid-plugin trac-git-plugin trac-spamfilter-plugin trac-ticketdelete-plugin trac-batchmodify-plugin; dnf clean all
 RUN groupadd -g 493 git; useradd -u 511 -g 493 -s /bin/bash git; usermod -aG git apache
