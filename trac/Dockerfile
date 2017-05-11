@@ -10,7 +10,7 @@ RUN sed -i 's/%h/%a/g' /etc/httpd/conf/httpd.conf
 
 ADD TracTicketLock-0.1-py2.7.egg /tmp
 RUN easy_install /tmp/TracTicketLock-0.1-py2.7.egg; rm /tmp/TracTicketLock-0.1-py2.7.egg
-#RUN pip install trac-github
+RUN pip install trac-github
 
 ADD 00-mod_remoteip.conf /etc/httpd/conf.d
 ADD trac.conf /etc/httpd/conf.d/trac.conf
