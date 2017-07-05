@@ -71,17 +71,17 @@ head-include=/usr/share/cgit/header.include
 ##
 
 repo.url=mythtv
-repo.path=/opt/gitolite/repositories/mythtv.git
+repo.path=/opt/repositories/mythtv.git
 repo.desc=The master MythTV repository
 repo.owner=admin@mythtv.org
 
 repo.url=mythweb
-repo.path=/opt/gitolite/repositories/mythweb.git
+repo.path=/opt/repositories/mythweb.git
 repo.desc=The official MythWeb code repository
 repo.owner=mythtv-dev@mythtv.org
 
 repo.url=packaging
-repo.path=/opt/gitolite/repositories/packaging.git
+repo.path=/opt/repositories/packaging.git
 repo.desc=The official MythTV packaging code repository
 repo.owner=mythtv-dev@mythtv.org
 
