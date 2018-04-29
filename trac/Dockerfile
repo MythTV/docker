@@ -13,6 +13,8 @@ RUN easy_install /tmp/TracTicketLock-0.1-py2.7.egg; rm /tmp/TracTicketLock-0.1-p
 RUN pip install trac-github
 
 ADD 00-mod_remoteip.conf /etc/httpd/conf.d
+ADD 00-server-limits.conf /etc/httpd/conf.d
+ADD status.conf /etc/httpd/conf.d
 ADD trac.conf /etc/httpd/conf.d/trac.conf
 ADD sso.credentials /etc/httpd/conf.d/sso.credentials
 
