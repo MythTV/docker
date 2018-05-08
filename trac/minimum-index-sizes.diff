@@ -1,0 +1,11 @@
+--- /usr/lib/python2.7/site-packages/trac/db/mysql_backend.py	2017-06-21 03:43:39.000000000 +0100
++++ mysql_backend.py	2018-05-08 14:47:32.077862101 +0100
+@@ -176,7 +188,7 @@
+         """
+         cols = []
+         limit_col = 767 / utf8_size
+-        limit = min(1000 / (utf8_size * len(columns)), limit_col)
++        limit = max(min(1000 / (utf8_size * len(columns)), limit_col),124)
+         for c in columns:
+             name = '`%s`' % c
+             table_col = filter((lambda x: x.name == c), table.columns)
