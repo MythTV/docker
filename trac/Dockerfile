@@ -1,6 +1,6 @@
 FROM fedora:27
 MAINTAINER Stuart Auchterlonie <stuarta@mythtv.org>
-RUN dnf -y update; dnf -y install git httpd mod_wsgi mod_auth_openidc trac trac-authopenid-plugin trac-spamfilter-plugin trac-ticketdelete-plugin trac-batchmodify-plugin python2-PyMySQL patch; dnf clean all
+RUN dnf -y update; dnf -y install git httpd mod_wsgi mod_auth_openidc trac trac-authopenid-plugin trac-spamfilter-plugin trac-ticketdelete-plugin python2-PyMySQL patch; dnf clean all
 RUN groupadd -g 493 git; useradd -u 511 -g 493 -s /bin/bash git; usermod -aG git apache
 RUN pip install OhlohWidgetsMacro
 # Fix OhlohWidgetsMacro to use https and the new endpoint
