@@ -18,8 +18,9 @@ RUN pip install trac-github
 ADD fix-requires.diff pymysql-support.diff minimum-index-sizes.diff /tmp/
 RUN cd /; patch -p0 < /tmp/fix-requires.diff; patch -p0 < /tmp/pymysql-support.diff; patch -p0 < /tmp/minimum-index-sizes.diff
 
+ADD 00-mpm.conf /etc/httpd/conf.modules.d
 ADD 00-mod_remoteip.conf /etc/httpd/conf.d
-ADD 00-server-limits.conf /etc/httpd/conf.d
+#ADD 00-server-limits.conf /etc/httpd/conf.d
 ADD status.conf /etc/httpd/conf.d
 ADD trac.conf /etc/httpd/conf.d/trac.conf
 ADD sso.credentials /etc/httpd/conf.d/sso.credentials
