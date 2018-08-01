@@ -14,4 +14,4 @@ fi
 
 docker stop keycloak
 docker rm keycloak
-docker run --name keycloak -d -e MYSQL_PORT_3306_TCP_ADDR=172.17.0.1 -e MYSQL_PORT_3306_TCP_PORT=3306 -e MYSQL_DATABASE=keycloak -e MYSQL_USER=keycloak -e MYSQL_PASSWORD=${MYSQL_PASSWORD} -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=${KEYCLOAK_PASSWORD} -p 8080:8080 mythtv/keycloak
+docker run --name keycloak -d -e DB_ADDR=172.17.0.1 -e DB_PORT=3306 -e DB_DATABASE=keycloak -e DB_USER=keycloak -e DB_PASSWORD=${MYSQL_PASSWORD} -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=${KEYCLOAK_PASSWORD} -p 8080:8080 mythtv/keycloak
