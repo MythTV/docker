@@ -2,4 +2,6 @@
 docker rmi mythtv/keycloak
 docker build --tag mythtv/keycloak /root/docker/keycloak
 
-echo "Please tag the mythtv/keycloak image with the current keycloak version"
+VERSION=`docker inspect jboss/keycloak | grep KEYCLOAK_VERSION | cut -f2 -d= | sed -e 's/",//g' | head -1`
+
+docker tag mythtv/keycloak:latest mythtv/keycloak:${VERSION}
