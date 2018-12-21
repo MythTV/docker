@@ -1,7 +1,5 @@
-Index: /usr/lib/python2.7/site-packages/trac/db/mysql_backend.py
-===================================================================
---- /usr/lib/python2.7/site-packages/trac.orig/db/mysql_backend.py
-+++ /usr/lib/python2.7/site-packages/trac/db/mysql_backend.py
+--- /usr/lib/python2.7/site-packages/trac/db/mysql_backend.py.orig	2018-07-29 19:16:12.000000000 +0100
++++ /usr/lib/python2.7/site-packages/trac/db/mysql_backend.py	2018-12-21 17:22:37.923493039 +0000
 @@ -17,7 +17,6 @@
  import os
  import re
@@ -10,7 +8,7 @@ Index: /usr/lib/python2.7/site-packages/trac/db/mysql_backend.py
  
  from genshi.core import Markup
  
-@@ -34,16 +33,19 @@ from trac.util.translation import _
+@@ -34,16 +33,19 @@
  
  _like_escape_re = re.compile(r'([/_%])')
  
@@ -36,7 +34,7 @@ Index: /usr/lib/python2.7/site-packages/trac/db/mysql_backend.py
          def _convert_row(self, row):
              return tuple(v.decode('utf-8') if isinstance(v, str) else v
                           for v in row)
-@@ -62,6 +64,10 @@ else:
+@@ -62,6 +64,10 @@
              return [self._convert_row(row) for row in rows] \
                     if rows is not None else []
  
@@ -47,7 +45,7 @@ Index: /usr/lib/python2.7/site-packages/trac/db/mysql_backend.py
  # Mapping from "abstract" SQL types to DB-specific types
  _type_map = {
      'int64': 'bigint',
-@@ -95,14 +101,20 @@ class MySQLConnector(Component):
+@@ -95,14 +101,20 @@
          """Location of mysqldump for MySQL database backups""")
  
      def __init__(self):
@@ -71,7 +69,7 @@ Index: /usr/lib/python2.7/site-packages/trac/db/mysql_backend.py
  
      # IDatabaseConnector methods
  
-@@ -115,13 +127,13 @@ class MySQLConnector(Component):
+@@ -115,13 +127,13 @@
          if not self.required:
              self._mysql_version = \
                  'server: "%s", client: "%s", thread-safe: %s' \
@@ -88,7 +86,7 @@ Index: /usr/lib/python2.7/site-packages/trac/db/mysql_backend.py
  
      def init_db(self, path, schema=None, log=None, user=None, password=None,
                  host=None, port=None, params={}):
-@@ -370,7 +382,7 @@ class MySQLConnection(ConnectionBase, Co
+@@ -370,7 +382,7 @@
              password = ''
          if port is None:
              port = 3306
@@ -97,7 +95,7 @@ Index: /usr/lib/python2.7/site-packages/trac/db/mysql_backend.py
          for name, value in params.iteritems():
              key = name.encode('utf-8')
              if name == 'read_default_group':
-@@ -381,22 +393,32 @@ class MySQLConnection(ConnectionBase, Co
+@@ -381,22 +393,32 @@
                  opts[key] = value.encode(sys.getfilesystemencoding())
              elif name in ('compress', 'named_pipe'):
                  opts[key] = as_int(value, 0)
@@ -139,7 +137,7 @@ Index: /usr/lib/python2.7/site-packages/trac/db/mysql_backend.py
          ConnectionWrapper.__init__(self, cnx, log)
          self._is_closed = False
  
-@@ -407,14 +429,14 @@ class MySQLConnection(ConnectionBase, Co
+@@ -407,14 +429,14 @@
          self.cnx.ping()
          try:
              self.cnx.rollback()
@@ -156,7 +154,7 @@ Index: /usr/lib/python2.7/site-packages/trac/db/mysql_backend.py
                  pass # this error would mean it's already closed.  So, ignore
              self._is_closed = True
  
-@@ -429,7 +451,7 @@ class MySQLConnection(ConnectionBase, Co
+@@ -429,7 +451,7 @@
          return 'concat(%s)' % ', '.join(args)
  
      def drop_column(self, table, column):
@@ -165,7 +163,7 @@ Index: /usr/lib/python2.7/site-packages/trac/db/mysql_backend.py
          if column in self.get_column_names(table):
              quoted_table = self.quote(table)
              cursor.execute("SHOW INDEX FROM %s" % quoted_table)
-@@ -451,8 +473,7 @@ class MySQLConnection(ConnectionBase, Co
+@@ -451,8 +473,7 @@
                             (quoted_table, self.quote(column)))
  
      def drop_table(self, table):
