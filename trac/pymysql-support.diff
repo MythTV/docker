@@ -1,7 +1,7 @@
-Index: trac/db/mysql_backend.py
+Index: /usr/lib/python2.7/site-packages/trac/db/mysql_backend.py
 ===================================================================
---- trac.orig/db/mysql_backend.py
-+++ trac/db/mysql_backend.py
+--- /usr/lib/python2.7/site-packages/trac.orig/db/mysql_backend.py
++++ /usr/lib/python2.7/site-packages/trac/db/mysql_backend.py
 @@ -17,7 +17,6 @@
  import os
  import re
