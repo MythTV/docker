@@ -1,5 +1,7 @@
---- /usr/lib/python2.7/site-packages/trac/db/mysql_backend.py	2017-06-21 03:43:39.000000000 +0100
-+++ mysql_backend.py	2018-05-08 14:47:32.077862101 +0100
+Index: trac/db/mysql_backend.py
+===================================================================
+--- trac.orig/db/mysql_backend.py
++++ trac/db/mysql_backend.py
 @@ -17,7 +17,6 @@
  import os
  import re
@@ -8,35 +10,33 @@
  
  from genshi.core import Markup
  
-@@ -34,17 +33,20 @@
+@@ -34,16 +33,19 @@ from trac.util.translation import _
  
  _like_escape_re = re.compile(r'([/_%])')
  
 +has_pymysql = False
-+pymsql_version = None
++pymysql_version = None
 +
  try:
 -    import MySQLdb
 -    import MySQLdb.cursors
 +    import pymysql
  except ImportError:
--    has_mysqldb = False
+-    MySQLdb = None
 -    mysqldb_version = None
++    raise TracError(_("Failed to import pymysql"))
 +    pass
  else:
--    has_mysqldb = True
 -    mysqldb_version = get_pkginfo(MySQLdb).get('version', MySQLdb.__version__)
 +    has_pymysql = True
-+
-+if has_pymysql:
-+    pymsql_version = get_pkginfo(pymysql).get('version', pymysql.__version__)
++    pymysql_version = get_pkginfo(pymysql).get('version', pymysql.__version__)
  
 -    class MySQLUnicodeCursor(MySQLdb.cursors.Cursor):
 +    class MySQLUnicodeCursor(pymysql.cursors.Cursor):
          def _convert_row(self, row):
              return tuple(v.decode('utf-8') if isinstance(v, str) else v
                           for v in row)
-@@ -63,6 +65,11 @@
+@@ -62,6 +64,10 @@ else:
              return [self._convert_row(row) for row in rows] \
                     if rows is not None else []
  
@@ -44,11 +44,10 @@
 +        def _show_warnings(self, conn=None):
 +            pass
 +
-+
  # Mapping from "abstract" SQL types to DB-specific types
  _type_map = {
      'int64': 'bigint',
-@@ -96,20 +103,25 @@
+@@ -95,14 +101,20 @@ class MySQLConnector(Component):
          """Location of mysqldump for MySQL database backups""")
  
      def __init__(self):
@@ -59,7 +58,7 @@
 +                (pymysql.get_client_info(), pymysql.thread_safe())
 +        else:
 +            self._mysql_version = None
-         self.error = None
++        self.error = None
  
      # ISystemInfoProvider methods
  
@@ -72,13 +71,7 @@
  
      # IDatabaseConnector methods
  
-     def get_supported_schemes(self):
--        if not has_mysqldb:
-+        if not has_pymysql:
-             self.error = _("Cannot load Python bindings for MySQL")
-         yield ('mysql', -1 if self.error else 1)
- 
-@@ -119,13 +131,13 @@
+@@ -115,13 +127,13 @@ class MySQLConnector(Component):
          if not self.required:
              self._mysql_version = \
                  'server: "%s", client: "%s", thread-safe: %s' \
@@ -95,7 +88,7 @@
  
      def init_db(self, path, schema=None, log=None, user=None, password=None,
                  host=None, port=None, params={}):
-@@ -371,7 +383,7 @@
+@@ -370,7 +382,7 @@ class MySQLConnection(ConnectionBase, Co
              password = ''
          if port is None:
              port = 3306
@@ -104,7 +97,7 @@
          for name, value in params.iteritems():
              key = name.encode('utf-8')
              if name == 'read_default_group':
-@@ -382,22 +394,32 @@
+@@ -381,22 +393,32 @@ class MySQLConnection(ConnectionBase, Co
                  opts[key] = value.encode(sys.getfilesystemencoding())
              elif name in ('compress', 'named_pipe'):
                  opts[key] = as_int(value, 0)
@@ -146,7 +139,7 @@
          ConnectionWrapper.__init__(self, cnx, log)
          self._is_closed = False
  
-@@ -408,14 +430,14 @@
+@@ -407,14 +429,14 @@ class MySQLConnection(ConnectionBase, Co
          self.cnx.ping()
          try:
              self.cnx.rollback()
@@ -163,7 +156,7 @@
                  pass # this error would mean it's already closed.  So, ignore
              self._is_closed = True
  
-@@ -430,7 +452,7 @@
+@@ -429,7 +451,7 @@ class MySQLConnection(ConnectionBase, Co
          return 'concat(%s)' % ', '.join(args)
  
      def drop_column(self, table, column):
@@ -172,7 +165,7 @@
          if column in self.get_column_names(table):
              quoted_table = self.quote(table)
              cursor.execute("SHOW INDEX FROM %s" % quoted_table)
-@@ -452,8 +474,7 @@
+@@ -451,8 +473,7 @@ class MySQLConnection(ConnectionBase, Co
                             (quoted_table, self.quote(column)))
  
      def drop_table(self, table):
