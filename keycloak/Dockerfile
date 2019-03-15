@@ -1,4 +1,4 @@
-FROM jboss/keycloak
+FROM quay.io/keycloak/keycloak
 MAINTAINER Stuart Auchterlonie <stuarta@mythtv.org>
 
 ENV PROXY_ADDRESS_FORWARDING true
