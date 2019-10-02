@@ -1,4 +1,4 @@
---- /usr/lib/python2.7/site-packages/Trac-1.2.3-py2.7.egg-info/requires.txt	2017-09-11 19:59:49.000000000 +0100
+--- /usr/lib/python2.7/site-packages/Trac-1.2.4-py2.7.egg-info/requires.txt	2017-09-11 19:59:49.000000000 +0100
 +++ requires.txt	2018-05-08 14:47:04.286931048 +0100
 @@ -5,7 +5,7 @@
  Babel>=0.9.5
