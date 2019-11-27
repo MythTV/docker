@@ -1,4 +1,4 @@
-FROM fedora:28
+FROM fedora:31
 MAINTAINER Stuart Auchterlonie <stuarta@mythtv.org>
 RUN dnf -y update && \
     dnf -y install httpd cgit && \
