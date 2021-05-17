@@ -1,3 +1,3 @@
 #!/bin/bash
-docker rmi mythtv/smolt
-docker build --tag mythtv/smolt /root/docker/smolt
+podman rmi mythtv/smolt
+podman build --tag mythtv/smolt /root/docker/smolt

@@ -2,6 +2,7 @@ FROM centos:6
 MAINTAINER Stuart Auchterlonie <stuarta@mythtv.org>
 # Setup EPEL
 #RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
+COPY CentOS-Base.repo /etc/yum.repos.d/
 RUN groupadd -r smoon -g 5000 && \
     useradd -u 5000 -g smoon -m -d /home/smoon -s /sbin/nologin -c "Smoon User" smoon && \
     yum -y update && \
